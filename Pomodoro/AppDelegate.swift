@@ -19,12 +19,9 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         case recess
     }
 
-    var count = 1500
-    var countBreak = 300
+    var count = 0
     var status = Status.idle
     var timer: Timer?
-    var breakTimer: Timer?
-
     var view: AppView?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -37,40 +34,37 @@ class AppDelegate: NSObject, NSApplicationDelegate,
 
     @objc func update(_ sender: Any?) {
         if status != .task {
-            timer = Timer.scheduledTimer(timeInterval: 1,
-                                         target: self,
-                                         selector: #selector(runTimedCode),
-                                         userInfo: nil,
-                                         repeats: true)
-            breakTimer?.invalidate()
-            status = .task
+            schedule(status: .task, count: 1500)
         } else {
             reset()
         }
-        view?.update(status: status)
+        view?.update(status, count: count)
     }
 
     @objc func updateBreak(_ sender: Any?) {
         if status != .recess {
-            breakTimer = Timer.scheduledTimer(timeInterval: 1,
-                                              target: self,
-                                              selector: #selector(runBreakCode),
-                                              userInfo: nil,
-                                              repeats: true)
-            timer?.invalidate()
-            status = .recess
+            schedule(status: .recess, count: 300)
         } else {
             reset()
         }
-        view?.update(status: status)
+        view?.update(status, count: count)
+    }
+
+    func schedule(status: Status, count: Int) {
+        timer?.invalidate()
+        self.status = status
+        self.count = count
+        timer = Timer.scheduledTimer(timeInterval: 1,
+                                     target: self,
+                                     selector: #selector(runTimedCode),
+                                     userInfo: nil,
+                                     repeats: true)
     }
 
     func reset() {
         timer?.invalidate()
-        breakTimer?.invalidate()
         status = .idle
-        count = 1500
-        countBreak = 300
+        count = 0
     }
 
     @objc func runTimedCode() {
@@ -81,35 +75,9 @@ class AppDelegate: NSObject, NSApplicationDelegate,
             count -= 1
             print(countDownLabel)
         } else {
-            showNotification(content: "Your task is over. Time for a break!")
+            view?.showNotification(status)
             reset()
-            view?.update(status: status)
         }
-    }
-
-    @objc func runBreakCode() {
-        if (countBreak > 0) {
-            let minutes = String(countBreak / 60)
-            let seconds = String(countBreak % 60)
-            let countDownLabel = minutes + ":" + seconds
-            countBreak -= 1
-            print(countDownLabel)
-        } else {
-            showNotification(content: "Your break is over. Time for a new task!")
-            reset()
-            view?.update(status: status)
-        }
-    }
-
-    func showNotification(content: String) -> Void {
-        let notification = NSUserNotification()
-        let nuuid = UUID().uuidString
-
-        notification.identifier = nuuid
-        notification.title = "Pomodoro"
-        notification.informativeText = content
-        notification.soundName = NSUserNotificationDefaultSoundName
-
-        _ = NSUserNotificationCenter.default.deliver(notification)
+        view?.update(status, count: count)
     }
 }
