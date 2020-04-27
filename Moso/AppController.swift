@@ -41,7 +41,7 @@ class AppController: NSObject, AppTimerDelegate {
 
     @IBAction func breakClicked(sender: NSMenuItem) {
         if timer.status != .recess {
-            timer.schedule(status: .recess, count: 3)
+            timer.schedule(status: .recess, count: 300)
         } else {
             timer.reset()
         }

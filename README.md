@@ -7,6 +7,8 @@ or have ads. Moso does exactly what it needs to do, and doesn't have ads.
 Moso runs the classic Pomodoro schedule: 25-minute tasks with 5-minute breaks.
 When a task or a break is over, it sends a notification.
 
+![Moso screenshot](docs/screenshot.png)
+
 The name [Moso] derived from Taiwanese Hakka <ruby>摸<rt>mò</rt>挲<rt>sò</rt></ruby>,
 which means fiddling around out of procrastination.
 
