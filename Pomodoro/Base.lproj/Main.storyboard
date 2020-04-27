@@ -99,8 +99,47 @@
                     </connections>
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Pomodoro" customModuleProvider="target"/>
+                <customObject id="phA-wc-e8e" userLabel="App Controller" customClass="AppController" customModule="Pomodoro" customModuleProvider="target">
+                    <connections>
+                        <outlet property="breakMenuItem" destination="Cay-Lj-5Wo" id="2F8-Cu-OO8"/>
+                        <outlet property="menu" destination="f1b-cd-f9m" id="VtB-y5-k6S"/>
+                        <outlet property="statMenuItem" destination="01j-af-oTQ" id="B13-Ul-Nwa"/>
+                        <outlet property="statSeparatorItem" destination="att-Sq-OBf" id="cAn-FW-gqU"/>
+                        <outlet property="taskMenuItem" destination="yTw-Qo-efx" id="0Jn-1k-iFA"/>
+                        <outlet property="timer" destination="6ad-Dy-Hsx" id="Rv0-mD-87d"/>
+                    </connections>
+                </customObject>
+                <customObject id="6ad-Dy-Hsx" userLabel="App Timer" customClass="AppTimer" customModule="Pomodoro" customModuleProvider="target">
+                    <connections>
+                        <outlet property="delegate" destination="phA-wc-e8e" id="U9R-GQ-B2S"/>
+                    </connections>
+                </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <menu title="Status Menu" id="f1b-cd-f9m">
+                    <items>
+                        <menuItem title="Idle" hidden="YES" enabled="NO" id="01j-af-oTQ">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="att-Sq-OBf"/>
+                        <menuItem title="Start Task" keyEquivalent="t" id="yTw-Qo-efx">
+                            <connections>
+                                <action selector="taskClickedWithSender:" target="phA-wc-e8e" id="ep2-zn-l1K"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Start Break" keyEquivalent="b" id="Cay-Lj-5Wo">
+                            <connections>
+                                <action selector="breakClickedWithSender:" target="phA-wc-e8e" id="jRG-GL-aeV"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="9HT-Rr-Wce"/>
+                        <menuItem title="Quit Pomodoro" keyEquivalent="q" id="Phc-xb-55t">
+                            <connections>
+                                <action selector="terminate:" target="Ady-hI-5gd" id="NIC-dt-Xfj"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
