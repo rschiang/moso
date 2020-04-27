@@ -18,9 +18,6 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         case task
         case recess
     }
-    
-    let statusItem = NSStatusBar.system.statusItem(
-        withLength:NSStatusItem.squareLength)
 
     var count = 1500
     var countBreak = 300
@@ -28,51 +25,14 @@ class AppDelegate: NSObject, NSApplicationDelegate,
     var timer: Timer?
     var breakTimer: Timer?
 
-    let menu = NSMenu()
-    var taskMenuItem: NSMenuItem?
-    var breakMenuItem: NSMenuItem?
+    var view: AppView?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        if let button = statusItem.button {
-            button.image = NSImage(named:NSImage.Name("StatusBarButtonImage"))
-        }
-        constructMenu()
+        view = AppView()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-    
-    func constructMenu() {
-        taskMenuItem = NSMenuItem(title: "Start Task",
-                                  action: #selector(AppDelegate.update(_:)),
-                                  keyEquivalent: "t")
-        breakMenuItem = NSMenuItem(title: "Start Break",
-                                   action: #selector(AppDelegate.updateBreak(_:)),
-                                   keyEquivalent: "b")
-
-        menu.addItem(taskMenuItem!)
-        menu.addItem(breakMenuItem!)
-        menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Quit Pomodoro",
-                                action: #selector(NSApplication.terminate(_:)),
-                                keyEquivalent: "q"))
-
-        statusItem.menu = menu
-    }
-
-    func updateMenu() {
-        if status == .task {
-            taskMenuItem!.title = "Stop Task"
-        } else {
-            taskMenuItem!.title = "Start Task"
-        }
-
-        if status == .recess {
-            breakMenuItem!.title = "Stop Break"
-        } else {
-            breakMenuItem!.title = "Start Break"
-        }
+        view = nil
     }
 
     @objc func update(_ sender: Any?) {
@@ -87,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         } else {
             reset()
         }
-        updateMenu()
+        view?.update(status: status)
     }
 
     @objc func updateBreak(_ sender: Any?) {
@@ -102,7 +62,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         } else {
             reset()
         }
-        updateMenu()
+        view?.update(status: status)
     }
 
     func reset() {
@@ -123,7 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         } else {
             showNotification(content: "Your task is over. Time for a break!")
             reset()
-            updateMenu()
+            view?.update(status: status)
         }
     }
 
@@ -137,7 +97,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         } else {
             showNotification(content: "Your break is over. Time for a new task!")
             reset()
-            updateMenu()
+            view?.update(status: status)
         }
     }
 
@@ -153,4 +113,3 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         _ = NSUserNotificationCenter.default.deliver(notification)
     }
 }
-
