@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Pomodoro
+//  Moso
 //
-//  Created by Apostolos Papadopoulos on 4/13/18.
-//  MIT, 2018 Apostolos Papadopoulos.
+//  Copyright © 2020 Poren Chiang et al.
+//  Released under MIT License; refer to project LICENSE for details.
 //
 
 import Cocoa

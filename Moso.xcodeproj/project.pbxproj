@@ -17,12 +17,12 @@
 /* Begin PBXFileReference section */
 		2B7EB6192456D3A40028B7BF /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		2B7EB61B245710520028B7BF /* AppTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTimer.swift; sourceTree = "<group>"; };
-		E8F851E52081032100787D87 /* Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8F851E52081032100787D87 /* Moso.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moso.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F851E82081032100787D87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8F851EC2081032300787D87 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E8F851EF2081032300787D87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E8F851F12081032300787D87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E8F851F22081032300787D87 /* Pomodoro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pomodoro.entitlements; sourceTree = "<group>"; };
+		E8F851F22081032300787D87 /* Moso.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Moso.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +39,7 @@
 		E8F851DC2081032100787D87 = {
 			isa = PBXGroup;
 			children = (
-				E8F851E72081032100787D87 /* Pomodoro */,
+				E8F851E72081032100787D87 /* Moso */,
 				E8F851E62081032100787D87 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,31 +47,31 @@
 		E8F851E62081032100787D87 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E8F851E52081032100787D87 /* Pomodoro.app */,
+				E8F851E52081032100787D87 /* Moso.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E8F851E72081032100787D87 /* Pomodoro */ = {
+		E8F851E72081032100787D87 /* Moso */ = {
 			isa = PBXGroup;
 			children = (
 				E8F851E82081032100787D87 /* AppDelegate.swift */,
 				E8F851EC2081032300787D87 /* Assets.xcassets */,
 				E8F851EE2081032300787D87 /* Main.storyboard */,
 				E8F851F12081032300787D87 /* Info.plist */,
-				E8F851F22081032300787D87 /* Pomodoro.entitlements */,
+				E8F851F22081032300787D87 /* Moso.entitlements */,
 				2B7EB6192456D3A40028B7BF /* AppController.swift */,
 				2B7EB61B245710520028B7BF /* AppTimer.swift */,
 			);
-			path = Pomodoro;
+			path = Moso;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E8F851E42081032100787D87 /* Pomodoro */ = {
+		E8F851E42081032100787D87 /* Moso */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E8F851F52081032300787D87 /* Build configuration list for PBXNativeTarget "Pomodoro" */;
+			buildConfigurationList = E8F851F52081032300787D87 /* Build configuration list for PBXNativeTarget "Moso" */;
 			buildPhases = (
 				E8F851E12081032100787D87 /* Sources */,
 				E8F851E22081032100787D87 /* Frameworks */,
@@ -81,9 +81,9 @@
 			);
 			dependencies = (
 			);
-			name = Pomodoro;
-			productName = Pomodoro;
-			productReference = E8F851E52081032100787D87 /* Pomodoro.app */;
+			name = Moso;
+			productName = Moso;
+			productReference = E8F851E52081032100787D87 /* Moso.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -98,10 +98,11 @@
 				TargetAttributes = {
 					E8F851E42081032100787D87 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
-			buildConfigurationList = E8F851E02081032100787D87 /* Build configuration list for PBXProject "Pomodoro" */;
+			buildConfigurationList = E8F851E02081032100787D87 /* Build configuration list for PBXProject "Moso" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -114,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E8F851E42081032100787D87 /* Pomodoro */,
+				E8F851E42081032100787D87 /* Moso */,
 			);
 		};
 /* End PBXProject section */
@@ -273,17 +274,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Pomodoro/Pomodoro.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Moso/Moso.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Pomodoro/Info.plist;
+				CURRENT_PROJECT_VERSION = 0;
+				INFOPLIST_FILE = Moso/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.apas.Pomodoro;
+				MARKETING_VERSION = 0.5;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.poren.moso;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -291,24 +294,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Pomodoro/Pomodoro.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Moso/Moso.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Pomodoro/Info.plist;
+				CURRENT_PROJECT_VERSION = 0;
+				INFOPLIST_FILE = Moso/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.apas.Pomodoro;
+				MARKETING_VERSION = 0.5;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.poren.moso;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E8F851E02081032100787D87 /* Build configuration list for PBXProject "Pomodoro" */ = {
+		E8F851E02081032100787D87 /* Build configuration list for PBXProject "Moso" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E8F851F32081032300787D87 /* Debug */,
@@ -317,7 +322,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E8F851F52081032300787D87 /* Build configuration list for PBXNativeTarget "Pomodoro" */ = {
+		E8F851F52081032300787D87 /* Build configuration list for PBXNativeTarget "Moso" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E8F851F62081032300787D87 /* Debug */,

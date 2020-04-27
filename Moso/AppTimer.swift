@@ -1,9 +1,9 @@
 //
 //  AppTimer.swift
-//  Pomodoro
+//  Moso
 //
-//  Created by Poren Chiang on 2020/4/27.
-//  Copyright © 2020 Apostolos Papadopoulos. All rights reserved.
+//  Copyright © 2020 Poren Chiang et al.
+//  Released under MIT License; refer to project LICENSE for details.
 //
 
 import Foundation

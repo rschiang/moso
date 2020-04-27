@@ -1,9 +1,9 @@
 //
 //  AppView.swift
-//  Pomodoro
+//  Moso
 //
-//  Created by Poren Chiang on 2020/4/27.
-//  Copyright © 2020 Apostolos Papadopoulos. All rights reserved.
+//  Copyright © 2020 Poren Chiang et al.
+//  Released under MIT License; refer to project LICENSE for details.
 //
 
 import Cocoa
@@ -22,8 +22,7 @@ class AppController: NSObject, AppTimerDelegate {
     override func awakeFromNib() {
         statusItem = NSStatusBar.system.statusItem(
                                         withLength: NSStatusItem.squareLength)
-        statusItem.button?.image = NSImage(named:
-                                   NSImage.Name("StatusBarButtonImage"))
+        statusItem.button?.image = NSImage(named: "StatusBarButtonImage")
         statusItem.isVisible = true
         if #available(OSX 10.12, *) {
             statusItem.behavior = NSStatusItem.Behavior.terminationOnRemoval
@@ -95,7 +94,7 @@ class AppController: NSObject, AppTimerDelegate {
         let nuuid = UUID().uuidString
 
         notification.identifier = nuuid
-        notification.title = "Pomodoro"
+        notification.title = "Moso"
         notification.informativeText = content
         notification.soundName = "Glass"
 
