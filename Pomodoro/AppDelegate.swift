@@ -11,22 +11,28 @@ import Foundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate,
-                                NSUserNotificationCenterDelegate {
+                             NSUserNotificationCenterDelegate {
+
+    enum Status {
+        case idle
+        case task
+        case recess
+    }
     
     let statusItem = NSStatusBar.system.statusItem(
         withLength:NSStatusItem.squareLength)
 
     var count = 1500
     var countBreak = 300
-    var counterLock = false
-    var breakLock = false
-    var timer = Timer()
-    var timerBreak = Timer()
+    var status = Status.idle
+    var timer: Timer?
+    var breakTimer: Timer?
 
     let menu = NSMenu()
+    var taskMenuItem: NSMenuItem?
+    var breakMenuItem: NSMenuItem?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
         if let button = statusItem.button {
             button.image = NSImage(named:NSImage.Name("StatusBarButtonImage"))
         }
@@ -38,89 +44,71 @@ class AppDelegate: NSObject, NSApplicationDelegate,
     }
     
     func constructMenu() {
-        menu.addItem(NSMenuItem(title: "Start Task",
-                                action: #selector(AppDelegate.update(_:)),
-                                keyEquivalent: "t"))
-        menu.addItem(NSMenuItem(title: "Start Break",
-                                action: #selector(AppDelegate.updateBreak(_:)),
-                                keyEquivalent: "b"))
+        taskMenuItem = NSMenuItem(title: "Start Task",
+                                  action: #selector(AppDelegate.update(_:)),
+                                  keyEquivalent: "t")
+        breakMenuItem = NSMenuItem(title: "Start Break",
+                                   action: #selector(AppDelegate.updateBreak(_:)),
+                                   keyEquivalent: "b")
+
+        menu.addItem(taskMenuItem!)
+        menu.addItem(breakMenuItem!)
         menu.addItem(NSMenuItem.separator())
         menu.addItem(NSMenuItem(title: "Quit Pomodoro",
                                 action: #selector(NSApplication.terminate(_:)),
                                 keyEquivalent: "q"))
-        
+
         statusItem.menu = menu
     }
 
+    func updateMenu() {
+        if status == .task {
+            taskMenuItem!.title = "Stop Task"
+        } else {
+            taskMenuItem!.title = "Start Task"
+        }
+
+        if status == .recess {
+            breakMenuItem!.title = "Stop Break"
+        } else {
+            breakMenuItem!.title = "Start Break"
+        }
+    }
+
     @objc func update(_ sender: Any?) {
-        if counterLock == false {
+        if status != .task {
             timer = Timer.scheduledTimer(timeInterval: 1,
                                          target: self,
                                          selector: #selector(runTimedCode),
                                          userInfo: nil,
                                          repeats: true)
-            counterLock = true
-            renameTaskItem(item_name_old: "Start Task",
-                           item_name_new: "Stop Task",
-                           key_name: "t",
-                           item_position: 0)
+            breakTimer?.invalidate()
+            status = .task
         } else {
             reset()
-            renameTaskItem(item_name_old: "Stop Task",
-                           item_name_new: "Start Task",
-                           key_name: "t",
-                           item_position: 0)
         }
+        updateMenu()
     }
 
     @objc func updateBreak(_ sender: Any?) {
-        if breakLock == false {
-            timerBreak = Timer.scheduledTimer(timeInterval: 1,
+        if status != .recess {
+            breakTimer = Timer.scheduledTimer(timeInterval: 1,
                                               target: self,
                                               selector: #selector(runBreakCode),
                                               userInfo: nil,
                                               repeats: true)
-            breakLock = true
-            renameBreakItem(item_name_old: "Start Break",
-                            item_name_new: "Stop Break",
-                            key_name: "b",
-                            item_position: 1)
+            timer?.invalidate()
+            status = .recess
         } else {
             reset()
-            renameBreakItem(item_name_old: "Stop Break",
-                            item_name_new: "Start Break",
-                            key_name: "b",
-                            item_position: 1)
         }
-    }
-
-    func renameTaskItem(item_name_old: String,
-                        item_name_new: String,
-                        key_name: String,
-                        item_position: Int) {
-        menu.removeItem(menu.item(withTitle: item_name_old)!)
-        menu.insertItem(withTitle: item_name_new,
-                        action: #selector(AppDelegate.update(_:)),
-                        keyEquivalent: key_name,
-                        at: item_position)
-    }
-
-    func renameBreakItem(item_name_old: String,
-                         item_name_new: String,
-                         key_name: String,
-                         item_position: Int) {
-        menu.removeItem(menu.item(withTitle: item_name_old)!)
-        menu.insertItem(withTitle: item_name_new,
-                        action: #selector(AppDelegate.updateBreak(_:)),
-                        keyEquivalent: key_name,
-                        at: item_position)
+        updateMenu()
     }
 
     func reset() {
-        timer.invalidate()
-        timerBreak.invalidate()
-        counterLock = false
-        breakLock = false
+        timer?.invalidate()
+        breakTimer?.invalidate()
+        status = .idle
         count = 1500
         countBreak = 300
     }
@@ -135,10 +123,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         } else {
             showNotification(content: "Your task is over. Time for a break!")
             reset()
-            renameTaskItem(item_name_old: "Stop Task",
-                           item_name_new: "Start Task",
-                           key_name: "t",
-                           item_position: 0)
+            updateMenu()
         }
     }
 
@@ -152,10 +137,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         } else {
             showNotification(content: "Your break is over. Time for a new task!")
             reset()
-            renameBreakItem(item_name_old: "Stop Break",
-                            item_name_new: "Start Break",
-                            key_name: "b",
-                            item_position: 1)
+            updateMenu()
         }
     }
 
