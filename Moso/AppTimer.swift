@@ -27,11 +27,9 @@ class AppTimer : NSObject {
         timer?.invalidate()
         self.status = status
         self.target = Date(timeIntervalSinceNow: TimeInterval(count))
-        timer = Timer.scheduledTimer(timeInterval: 1,
-                                     target: self,
-                                     selector: #selector(tick),
-                                     userInfo: nil,
-                                     repeats: true)
+        timer = Timer(timeInterval: 1, target: self, selector: #selector(tick),
+                      userInfo: nil, repeats: true)
+        RunLoop.current.add(timer!, forMode: .eventTracking)
     }
 
     func reset() {

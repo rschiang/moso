@@ -26,10 +26,14 @@ class AppDelegate: NSObject, NSApplicationDelegate,
 
     func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate
         notification: NSUserNotification) {
-        if notification.activationType == .actionButtonClicked {
+        switch notification.activationType {
+        case .actionButtonClicked:
             delegate?.notificationActionClicked(notification)
+            fallthrough
+        case .additionalActionClicked:
+            center.removeAllDeliveredNotifications()
+        default: break
         }
-        center.removeAllDeliveredNotifications()
     }
 }
 
