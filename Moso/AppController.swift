@@ -32,7 +32,7 @@ class AppController: NSObject, AppTimerDelegate, AppNotificationDelegate {
 
     @IBAction func taskClicked(sender: NSMenuItem) {
         if timer.status != .task {
-            timer.schedule(status: .task, count: 1500)
+            timer.schedule(status: .task, count: AppTimer.taskInterval)
         } else {
             timer.reset()
         }
@@ -41,7 +41,7 @@ class AppController: NSObject, AppTimerDelegate, AppNotificationDelegate {
 
     @IBAction func breakClicked(sender: NSMenuItem) {
         if timer.status != .recess {
-            timer.schedule(status: .recess, count: 300)
+            timer.schedule(status: .recess, count: AppTimer.breakInterval)
         } else {
             timer.reset()
         }
@@ -65,17 +65,18 @@ class AppController: NSObject, AppTimerDelegate, AppNotificationDelegate {
                 "Take a deep breath!", "Better stay hydrated!"
                 ].randomElement()!
 
-            notification.title = "Time for a break"
+            notification.title = mindfulness
             notification.informativeText = String(format:
-                "Task is over at %@. %@", time, mindfulness)
+                "Task is over at %@. Time for a break!", time)
         case .recess:
-            notification.title = "Head back to work"
+            notification.title = "Get prepared!"
             notification.informativeText = String(format:
-                "Break is over at %@.", time)
+                "Break is over at %@. Time for a task!", time)
         default: break
         }
 
         notification.actionButtonTitle = "Start"
+        notification.otherButtonTitle = "Dismiss"
         notification.userInfo = ["type": sender.status.rawValue]
         notification.identifier = nuuid
         notification.soundName = "Glass"
