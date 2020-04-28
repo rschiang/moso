@@ -12,14 +12,21 @@ class AppTimer : NSObject {
 
     var timer: Timer?
     var status = AppStatus.idle
-    var count = 0
+    var target = Date.distantPast
+
+    static let taskInterval = 1500
+    static let breakInterval = 300
+    var count : Int {
+        let count = target.timeIntervalSinceNow
+        return count > 0 ? Int(count.rounded(.up)) : 0
+    }
 
     @IBOutlet weak var delegate: AppTimerDelegate?
 
     func schedule(status: AppStatus, count: Int) {
         timer?.invalidate()
         self.status = status
-        self.count = count
+        self.target = Date(timeIntervalSinceNow: TimeInterval(count))
         timer = Timer.scheduledTimer(timeInterval: 1,
                                      target: self,
                                      selector: #selector(tick),
@@ -30,13 +37,11 @@ class AppTimer : NSObject {
     func reset() {
         timer?.invalidate()
         status = .idle
-        count = 0
+        target = .distantPast
     }
 
     @objc func tick() {
-        if (count > 0) {
-            count -= 1
-        } else {
+        if (count <= 0) {
             delegate?.timerInvalidated(self)
             reset()
         }
@@ -45,8 +50,8 @@ class AppTimer : NSObject {
 }
 
 @objc protocol AppTimerDelegate {
-    func timerDidUpdate(_ sender: AppTimer?)
-    func timerInvalidated(_ sender: AppTimer?)
+    func timerDidUpdate(_ sender: AppTimer)
+    func timerInvalidated(_ sender: AppTimer)
 }
 
 @objc enum AppStatus: Int {

@@ -9,7 +9,7 @@
 import Cocoa
 import Foundation
 
-class AppController: NSObject, AppTimerDelegate {
+class AppController: NSObject, AppTimerDelegate, AppNotificationDelegate {
 
     var statusItem: NSStatusItem!
     @IBOutlet weak var menu: NSMenu!
@@ -48,22 +48,56 @@ class AppController: NSObject, AppTimerDelegate {
         update()
     }
 
-    func timerDidUpdate(_ sender: AppTimer?) {
+    func timerDidUpdate(_ sender: AppTimer) {
         update()
     }
 
-    func timerInvalidated(_ sender: AppTimer?) {
-        switch sender!.status {
+    func timerInvalidated(_ sender: AppTimer) {
+        let notification = NSUserNotification()
+        let nuuid = UUID().uuidString
+        let time = DateFormatter.localizedString(from: sender.target,
+                                                 dateStyle: .none,
+                                                 timeStyle: .short)
+        switch sender.status {
         case .task:
-            showNotification(content: "Your task is over. Time for a break!")
+            let mindfulness = [
+                "Do some stretches!", "Get some fresh air!",
+                "Take a deep breath!", "Better stay hydrated!"
+                ].randomElement()!
+
+            notification.title = "Time for a break"
+            notification.informativeText = String(format:
+                "Task is over at %@. %@", time, mindfulness)
         case .recess:
-            showNotification(content: "Your break is over. Time for a new task!")
+            notification.title = "Head back to work"
+            notification.informativeText = String(format:
+                "Break is over at %@.", time)
         default: break
+        }
+
+        notification.actionButtonTitle = "Start"
+        notification.userInfo = ["type": sender.status.rawValue]
+        notification.identifier = nuuid
+        notification.soundName = "Glass"
+
+        NSUserNotificationCenter.default.deliver(notification)
+    }
+
+    func notificationActionClicked(_ notification: NSUserNotification) {
+        if let type = notification.userInfo?["type"] as? Int {
+            switch AppStatus(rawValue: type) {
+            case .task:
+                timer.schedule(status: .recess, count: AppTimer.breakInterval)
+            case .recess:
+                timer.schedule(status: .task, count: AppTimer.taskInterval)
+            default: break
+            }
         }
     }
 
     func update() {
-        let status = timer.status, count = timer.count
+        let status = timer.status
+        let count = timer.count
 
         if count > 0 {
             statMenuItem.title = String(format: "%02d:%02d %@",
@@ -87,17 +121,5 @@ class AppController: NSObject, AppTimerDelegate {
         } else {
             breakMenuItem.title = "Start Break"
         }
-    }
-
-    func showNotification(content: String) {
-        let notification = NSUserNotification()
-        let nuuid = UUID().uuidString
-
-        notification.identifier = nuuid
-        notification.title = "Moso"
-        notification.informativeText = content
-        notification.soundName = "Glass"
-
-        NSUserNotificationCenter.default.deliver(notification)
     }
 }

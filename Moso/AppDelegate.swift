@@ -13,12 +13,26 @@ import Foundation
 class AppDelegate: NSObject, NSApplicationDelegate,
                              NSUserNotificationCenterDelegate {
 
+    @IBOutlet weak var delegate: AppNotificationDelegate?
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSUserNotificationCenter.default.delegate = self
     }
 
-    func userNotificationCenter(_ center: NSUserNotificationCenter,
-                                shouldPresent notification: NSUserNotification) -> Bool {
+    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent
+        notification: NSUserNotification) -> Bool {
         return true
     }
+
+    func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate
+        notification: NSUserNotification) {
+        if notification.activationType == .actionButtonClicked {
+            delegate?.notificationActionClicked(notification)
+        }
+        center.removeAllDeliveredNotifications()
+    }
+}
+
+@objc protocol AppNotificationDelegate {
+    func notificationActionClicked(_ notification: NSUserNotification)
 }
