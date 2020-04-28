@@ -22,10 +22,8 @@ SOFTWARE.
 
 ---
 
-[Pomodoro][pomodoro] by [@apas][apas] was released under MIT License:
+[Pomodoro](https://github.com/apas/pomodoro) by @apas was released under
 
 > MIT, 2018 Apostolos Papadopoulos.
 
-[pomodoro]: https://github.com/apas/pomodoro
-
-[@apas]: https://github.com/apas
+MIT License.
