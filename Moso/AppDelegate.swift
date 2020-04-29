@@ -19,6 +19,11 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         NSUserNotificationCenter.default.delegate = self
     }
 
+    func applicationWillTerminate(_ notification: Notification) {
+        // Clean up all notifications before exit
+        NSUserNotificationCenter.default.removeAllDeliveredNotifications()
+    }
+
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent
         notification: NSUserNotification) -> Bool {
         return true

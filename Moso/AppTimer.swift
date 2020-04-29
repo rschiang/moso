@@ -29,7 +29,7 @@ class AppTimer : NSObject {
         self.target = Date(timeIntervalSinceNow: TimeInterval(count))
         timer = Timer(timeInterval: 1, target: self, selector: #selector(tick),
                       userInfo: nil, repeats: true)
-        RunLoop.current.add(timer!, forMode: .eventTracking)
+        RunLoop.current.add(timer!, forMode: .common)
     }
 
     func reset() {
